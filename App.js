@@ -1,54 +1,39 @@
-import React from 'react';
-import {useState} from 'react';
-import {SafeAreaView, TextInput,View,StyleSheet,Text,Button} from 'react-native';
+import * as React from 'react';
+import {View, Text} from 'react-native';
 
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import HomeScreen from './screens/HomeScreen';
+import AboutScreen from './screens/AboutScreen';
 
+const Stack = createNativeStackNavigator();
 
 const App = () => {
-
-   const [inputValue,setInputValue] = useState('')
-
-   const checkValueIsNumberOrNot = () => {
-    if(isNaN(inputValue)){
-      alert("It is not a Number");
-    }else{
-      alert("It is a Number");
-    }
-   }
-  
   return (
-    <SafeAreaView style={{flex:1}}>
-      <View style = {styles.container}>
-        <TextInput 
-         placeholder = "Enter Text"
-         style = {styles.textInputStyle}
-         onChangeText = {(inputValue)=>{setInputValue(inputValue)}}
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#0096AD',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{title: 'หน้าหลัก'}}
         />
-        <Button
-          title = "Check Value Is Number or Not"
-          color = "#606070"
-          onPress = {checkValueIsNumberOrNot}
+         <Stack.Screen
+          name="About"
+          component={AboutScreen}
+          options={{title: 'เกี่ยวกับเรา'}}
         />
-      </View>
-    </SafeAreaView>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-  flex: 1,
-  alignItems:"center",
-  marginTop:60,
-  },
-  textInputStyle:{
-    textAlign:"center",
-    height:50,
-    width:'70%',
-    marginBottom:10,
-    borderColor:'black'
-  }
-  });
-  
-
 export default App;
-
